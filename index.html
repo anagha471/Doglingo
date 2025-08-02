@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Doglingo 🐶</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fef9f4;
+      color: #333;
+    }
+
+    /* Running Dog Animation */
+    .running-dog {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Loading Animation Styles */
+    #loadingScreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #fff7ec;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 9998;
+      transition: opacity 0.5s ease;
+    }
+
+    #loaderContent {
+      text-align: center;
+    }
+
+    .paw {
+      font-size: 60px;
+      animation: spin 2s linear infinite;
+      color: #ff9f1c;
+    }
+
+    .logo {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 32px;
+      color: #ff6f61;
+      margin-top: 10px;
+      animation: fadeInBounce 1.5s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes fadeInBounce {
+      0% {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+      60% {
+        transform: translateY(10px);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+      text-align: center;
+    }
+
+    input,
+    button {
+      padding: 10px;
+      margin: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      background-color: #ffb347;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #ff9f1c;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+
+    #barkDiary {
+      list-style: none;
+      padding: 0;
+      margin-top: 10px;
+      text-align: left;
+    }
+
+    #barkDiary li {
+      background: #ffefd5;
+      margin-bottom: 5px;
+      padding: 6px 10px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="running-dog">
+    <img src="dogrun-unscreen.gif" alt="Running Dog">
+  </div>
+
+
+  <div id="loadingScreen">
+    <div id="loaderContent">
+      <div class="paw">🐾</div>
+      <h1 class="logo">Doglingo</h1>
+    </div>
+  </div>
+
+  <div id="introSection">
+    <div class="container">
+      <h1>🐕‍🦺 Welcome to Doglingo! 🐾</h1>
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <img src="doggie.png" alt="Cute Dog" style="width: 250px; height: auto; border-radius: 20px; box-shadow: 0 8px 25px rgba(139, 69, 19, 0.4); border: 3px solid #8b4513;">
+      </div>
+
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <h2 style="color: #8b4513; margin-bottom: 1rem;">🎭 The Ultimate Dog Bark Translator 🎭</h2>
+        <p style="font-size: 1.1rem; line-height: 1.6; color: #4a3c2c; margin-bottom: 1.5rem;">
+          Ever wondered what your furry friend is really thinking?
+          Our advanced bark analysis reveals the hilarious inner monologue behind every woof!
+        </p>
+
+        <div style="display: flex; justify-content: space-around; margin: 2rem 0; flex-wrap: wrap;">
+          <div style="text-align: center; margin: 1rem;">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎙️</div>
+            <p style="color: #8b4513; font-weight: bold;">Voice Analysis</p>
+          </div>
+          <div style="text-align: center; margin: 1rem;">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎭</div>
+            <p style="color: #8b4513; font-weight: bold;">Funny Translations</p>
+          </div>
+          <div style="text-align: center; margin: 1rem;">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">🍗</div>
+            <p style="color: #8b4513; font-weight: bold;">Random Treats</p>
+          </div>
+          <div style="text-align: center; margin: 1rem;">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎨</div>
+            <p style="color: #8b4513; font-weight: bold;">Dog Memes</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        <button id="getStartedBtn">Get Started</button>
+      </div>
+
+      <div style="background: linear-gradient(145deg, #f5f0e8, #faf6f0); margin-top: 2rem; border-radius: 20px; padding: 2rem; text-align: center; border: 2px solid #8b4513; box-shadow: 0 4px 15px rgba(139, 69, 19, 0.2);">
+        <p style="font-size: 1.3rem; line-height: 1.6; color: #8b4513; font-style: italic; font-weight: bold;">
+          "Finally, a dog translator—because barking back wasn't working." 🐕✨
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="profileSection" style="display: none;">
+    <div class="container">
+      <h1>🐕‍🦺 Dog Profile 🐾</h1>
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <img src="doggie.png" alt="Cute Dog" style="width: 200px; height: auto; border-radius: 20px; box-shadow: 0 8px 25px rgba(255, 182, 185, 0.4); border: 3px solid #ffb6b9;">
+      </div>
+      <form id="dogProfileForm">
+        <input type="text" id="dogName" placeholder="Dog's Name" required><br>
+        <input type="number" id="dogAge" placeholder="Dog's Age" required><br>
+        <input type="text" id="dogBreed" placeholder="Breed" required><br>
+        <button type="submit">Save Profile</button>
+        <button type="button" onclick="testForm()" style="background: linear-gradient(145deg, #a0522d, #cd853f); margin-left: 10px;">Test Form</button>
+      </form>
+
+      <div style="background: linear-gradient(145deg, #f5f0e8, #faf6f0); margin-top: 2rem; border-radius: 20px; padding: 2rem; text-align: center; border: 2px solid #8b4513; box-shadow: 0 4px 15px rgba(139, 69, 19, 0.2);">
+        <p style="font-size: 1.3rem; line-height: 1.6; color: #8b4513; font-style: italic; font-weight: bold;">
+          "Finally, a dog translator—because barking back wasn't working." 🐕✨
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="appSection" style="display: none;">
+    <div class="container">
+      <h1>🐕‍🦺 Doglingo 🐾</h1>
+      <p>🎵 Translating <span id="displayDogName">your dog</span>'s bark... kind of! 🎵</p>
+      
+      <canvas id="waveform" width="600" height="120"></canvas>
+
+      <button id="startBtn">🎙️ Start Listening 🐕</button>
+      <button id="stopBtn">🛑 Stop Listening 🐾</button>
+      <button id="resetProfileBtn" style="background: linear-gradient(145deg, #a0522d, #cd853f);">🔄 Reset Profile 🐾</button>
+      <button id="testSnackBtn" style="background: linear-gradient(145deg, #cd853f, #a0522d);">🍗 Test Snack Drop 🦴</button>
+      <p id="status"></p>
+
+
+      <div id="result" class="hidden">
+        <h2 id="translation"></h2>
+        <p id="barkType"></p>
+      </div>
+
+      <ul id="barkDiary"></ul>
+
+      <div style="background: linear-gradient(145deg, #f5f0e8, #faf6f0); margin-top: 2rem; border-radius: 20px; padding: 2rem; text-align: center; border: 2px solid #8b4513; box-shadow: 0 4px 15px rgba(139, 69, 19, 0.2);">
+        <h3 style="color: #8b4513; margin-bottom: 1rem;">🐕 Bark to Meme Generator 🎭</h3>
+        <p style="color: #4a3c2c; margin-bottom: 1.5rem;">Click the button below to generate a random dog meme based on your bark!</p>
+        <button id="generateMemeBtn" style="background: linear-gradient(145deg, #cd853f, #a0522d); margin: 1rem;">🎨 Generate Dog Meme 🐾</button>
+
+        <div id="memeResult" style="display: none; margin-top: 1.5rem; padding: 1rem; background: rgba(255, 255, 255, 0.7); border-radius: 15px; border: 2px solid #8b4513;">
+          <div id="memeText" style="font-size: 1.2rem; font-weight: bold; color: #8b4513; margin-bottom: 0.5rem;"></div>
+          <div id="memeEmoji" style="font-size: 3rem; margin: 1rem 0;"></div>
+          <div id="memeCaption" style="font-style: italic; color: #4a3c2c;"></div>
+        </div>
+      </div>
+
+      <div style="background: linear-gradient(145deg, #f5f0e8, #faf6f0); margin-top: 2rem; border-radius: 20px; padding: 2rem; text-align: center; border: 2px solid #8b4513; box-shadow: 0 4px 15px rgba(139, 69, 19, 0.2);">
+        <p style="font-size: 1.3rem; line-height: 1.6; color: #8b4513; font-style: italic; font-weight: bold;">
+          "Finally, a dog translator—because barking back wasn't working." 🐕✨
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Loading animation
+    window.addEventListener("load", () => {
+      const loading = document.getElementById("loadingScreen");
+      setTimeout(() => {
+        loading.style.opacity = 0;
+        setTimeout(() => {
+          loading.style.display = "none";
+        }, 500);
+      }, 2500);
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("dogProfileForm");
+      const introSection = document.getElementById("introSection");
+      const profileSection = document.getElementById("profileSection");
+      const appSection = document.getElementById("appSection");
+      const displayDogName = document.getElementById("displayDogName");
+      const getStartedBtn = document.getElementById("getStartedBtn");
+      
+      // Check if profile already exists
+      const existingProfile = localStorage.getItem("dogProfile");
+      if (existingProfile) {
+        try {
+          const profile = JSON.parse(existingProfile);
+          displayDogName.textContent = profile.name;
+          introSection.style.display = "none";
+          profileSection.style.display = "none";
+          appSection.style.display = "block";
+          startSnackDrops(); // Start snack drops when loading existing profile
+        } catch (e) {
+          console.error("Error parsing profile:", e);
+          localStorage.removeItem("dogProfile");
+          // Show intro page if profile is corrupted
+          introSection.style.display = "block";
+          profileSection.style.display = "none";
+          appSection.style.display = "none";
+        }
+      } else {
+        // Show intro page if no profile exists
+        introSection.style.display = "block";
+        profileSection.style.display = "none";
+        appSection.style.display = "none";
+      }
+
+      form.addEventListener("submit", function(e) {
+        e.preventDefault();
+        console.log("Form submitted!");
+
+        const name = document.getElementById("dogName").value.trim();
+        const age = document.getElementById("dogAge").value;
+        const breed = document.getElementById("dogBreed").value.trim();
+
+        console.log("Name:", name, "Age:", age, "Breed:", breed);
+
+        if (name && age && breed) {
+          localStorage.setItem("dogProfile", JSON.stringify({
+            name,
+            age,
+            breed
+          }));
+          displayDogName.textContent = name;
+          profileSection.style.display = "none";
+          appSection.style.display = "block";
+          startSnackDrops(); // Start snack drops when entering app
+
+          // Test canvas when app section becomes visible
+          setTimeout(() => {
+            if (canvas) {
+              console.log("Testing canvas after app section becomes visible");
+              ctx.fillStyle = "red";
+              ctx.fillRect(0, 0, 100, 100);
+              console.log("Red square drawn on canvas");
+            } else {
+              console.error("Canvas still not found after app section visible");
+            }
+          }, 100);
+
+          console.log("Profile saved successfully!");
+        } else {
+          alert("Please fill out all fields.");
+          console.log("Form validation failed");
+        }
+      });
+
+      // Add debugging for input fields
+      const inputs = form.querySelectorAll('input');
+      inputs.forEach(input => {
+        input.addEventListener('input', function() {
+          console.log(`${input.id} changed to:`, input.value);
+        });
+        input.addEventListener('focus', function() {
+          console.log(`${input.id} focused`);
+        });
+      });
+      
+      // Event listeners for the buttons
+      getStartedBtn.addEventListener("click", () => {
+        introSection.style.display = "none";
+        profileSection.style.display = "block";
+      });
+
+      document.getElementById("startBtn").addEventListener("click", startListening);
+      document.getElementById("stopBtn").addEventListener("click", stopListening);
+      
+      // Reset Profile button logic
+      document.getElementById("resetProfileBtn").addEventListener("click", () => {
+        stopSnackDrops(); // Stop snack drops when resetting profile
+        localStorage.removeItem("dogProfile");
+        location.reload(); // Reload the page to reset the app state
+      });
+
+      document.getElementById("testSnackBtn").addEventListener("click", () => {
+        dropRandomSnack();
+      });
+
+      document.getElementById("generateMemeBtn").addEventListener("click", () => {
+        generateDogMeme();
+      });
+
+    });
+
+    let isListening = false;
+    let audioContext, analyser, microphone, dataArray, animationId, stream;
+
+    // These variables are now guaranteed to find the canvas element
+    const canvas = document.getElementById("waveform");
+    const ctx = canvas.getContext("2d");
+
+    function resizeCanvas() {
+      if (canvas) {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = 120;
+        console.log("Canvas resized to:", canvas.width, "x", canvas.height);
+      } else {
+        console.error("Canvas element not found!");
+      }
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+
+    // Initialize canvas when DOM is ready
+    if (canvas) {
+      resizeCanvas();
+      console.log("Canvas initialized successfully");
+
+      // Test canvas by drawing a simple shape
+      ctx.fillStyle = "#8b4513";
+      ctx.fillRect(10, 10, 50, 50);
+      console.log("Test rectangle drawn on canvas");
+    } else {
+      console.error("Canvas not found during initialization");
+    }
+
+    function startListening() {
+      console.log("Start listening clicked");
+      if (isListening) {
+        console.log("Already listening");
+        return;
+      }
+
+      if (!canvas) {
+        console.error("Canvas not found in startListening");
+        alert("Canvas element not found. Please refresh the page.");
+        return;
+      }
+
+      console.log("Requesting microphone access...");
+      navigator.mediaDevices.getUserMedia({
+        audio: true
+      }).then(userStream => {
+        stream = userStream;
+        console.log("Microphone access granted");
+
+        // Create audio context
+        audioContext = new(window.AudioContext || window.webkitAudioContext)();
+        console.log("Audio context created");
+
+        // Resume audio context if suspended
+        if (audioContext.state === 'suspended') {
+          audioContext.resume().then(() => {
+            console.log("Audio context resumed");
+          });
+        }
+
+        analyser = audioContext.createAnalyser();
+        analyser.fftSize = 2048;
+        analyser.smoothingTimeConstant = 0.8;
+
+        microphone = audioContext.createMediaStreamSource(stream);
+        microphone.connect(analyser);
+
+        const bufferLength = analyser.frequencyBinCount;
+        dataArray = new Uint8Array(bufferLength);
+
+        console.log("Audio setup complete, buffer length:", bufferLength);
+
+        isListening = true;
+        document.getElementById("status").textContent = "🎧 Listening...";
+
+        function draw() {
+          animationId = requestAnimationFrame(draw);
+          analyser.getByteTimeDomainData(dataArray);
+
+          // Clear canvas with warm background
+          ctx.fillStyle = "#f5f0e8";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          // Draw grid lines
+          ctx.strokeStyle = "rgba(139, 69, 19, 0.1)";
+          ctx.lineWidth = 1;
+          for (let i = 0; i < canvas.height; i += 20) {
+            ctx.beginPath();
+            ctx.moveTo(0, i);
+            ctx.lineTo(canvas.width, i);
+            ctx.stroke();
+          }
+
+          // Draw waveform
+          ctx.lineWidth = 4;
+          ctx.strokeStyle = "#8b4513";
+          ctx.beginPath();
+
+          const sliceWidth = canvas.width * 1.0 / bufferLength;
+          let x = 0;
+
+          for (let i = 0; i < bufferLength; i++) {
+            const v = dataArray[i] / 128.0;
+            const y = v * canvas.height / 2;
+
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+            x += sliceWidth;
+          }
+
+          ctx.lineTo(canvas.width, canvas.height / 2);
+          ctx.stroke();
+
+          // Draw a thicker center line for reference
+          ctx.strokeStyle = "rgba(139, 69, 19, 0.3)";
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(0, canvas.height / 2);
+          ctx.lineTo(canvas.width, canvas.height / 2);
+          ctx.stroke();
+
+          // Draw volume indicator
+          const avgVolume = dataArray.reduce((sum, val) => sum + Math.abs(val - 128), 0) / bufferLength;
+          const volumeBarWidth = (avgVolume / 50) * canvas.width;
+
+          // Volume bar background
+          ctx.fillStyle = "rgba(139, 69, 19, 0.2)";
+          ctx.fillRect(0, canvas.height - 20, canvas.width, 15);
+
+          // Volume bar
+          ctx.fillStyle = avgVolume > 15 ? "#cd853f" : "#8b4513";
+          ctx.fillRect(0, canvas.height - 20, volumeBarWidth, 15);
+
+          // Volume text
+          ctx.fillStyle = "#8b4513";
+          ctx.font = "12px Comic Sans MS";
+          ctx.textAlign = "right";
+          ctx.fillText(`Volume: ${Math.round(avgVolume)}`, canvas.width - 10, canvas.height - 5);
+          
+          // Bark detection
+          if (avgVolume > 12 && avgVolume < 45) {
+            translateBark(avgVolume);
+          }
+        }
+
+        draw();
+      }).catch(err => {
+        console.error("Microphone error:", err);
+        alert("Microphone access denied or not working.");
+      });
+    }
+
+    function stopListening() {
+      if (!isListening) return;
+      isListening = false;
+
+      if (animationId) cancelAnimationFrame(animationId);
+      if (microphone) microphone.disconnect();
+      if (analyser) analyser.disconnect();
+      if (audioContext) audioContext.close();
+
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        stream = null;
+      }
+
+      document.getElementById("status").textContent = "🛑 Stopped listening.";
+    }
+
+    // Test function
+    window.testForm = function() {
+      console.log("Test button clicked!");
+      const nameInput = document.getElementById("dogName");
+      const ageInput = document.getElementById("dogAge");
+      const breedInput = document.getElementById("dogBreed");
+
+      console.log("Name input:", nameInput);
+      console.log("Age input:", ageInput);
+      console.log("Breed input:", breedInput);
+
+      if (nameInput && ageInput && breedInput) {
+        nameInput.value = "Test Dog";
+        ageInput.value = "5";
+        breedInput.value = "Golden Retriever";
+        console.log("Test values set!");
+      } else {
+        console.log("Some inputs not found!");
+      }
+    };
+
+    // Test canvas function
+    function testCanvas() {
+      console.log("Testing canvas...");
+      if (!canvas) {
+        console.error("Canvas not found!");
+        alert("Canvas element not found!");
+        return;
+      }
+
+      console.log("Canvas found, size:", canvas.width, "x", canvas.height);
+
+      // Clear canvas
+      ctx.fillStyle = "#f5f0e8";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw test pattern
+      ctx.fillStyle = "#8b4513";
+      ctx.fillRect(10, 10, 100, 50);
+
+      ctx.fillStyle = "#cd853f";
+      ctx.fillRect(120, 10, 100, 50);
+
+      ctx.fillStyle = "#a0522d";
+      ctx.fillRect(230, 10, 100, 50);
+
+      // Draw text
+      ctx.fillStyle = "#8b4513";
+      ctx.font = "16px Comic Sans MS";
+      ctx.textAlign = "center";
+      ctx.fillText("Canvas Test - If you see this, canvas is working!", canvas.width / 2, 80);
+
+      console.log("Test pattern drawn on canvas");
+    }
+
+    // Test audio graph function
+    function testAudioGraph() {
+      console.log("Testing audio graph...");
+
+      if (!canvas) {
+        console.error("Canvas not found!");
+        return;
+      }
+
+      // Create fake audio data for testing
+      const fakeDataArray = new Uint8Array(1024);
+      for (let i = 0; i < fakeDataArray.length; i++) {
+        fakeDataArray[i] = 128 + Math.sin(i * 0.1) * 50;
+      }
+
+      // Draw the fake waveform
+      ctx.fillStyle = "#f5f0e8";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.lineWidth = 4;
+      ctx.strokeStyle = "#8b4513";
+      ctx.beginPath();
+
+      const sliceWidth = canvas.width * 1.0 / fakeDataArray.length;
+      let x = 0;
+
+      for (let i = 0; i < fakeDataArray.length; i++) {
+        const v = fakeDataArray[i] / 128.0;
+        const y = v * canvas.height / 2;
+
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+        x += sliceWidth;
+      }
+
+      ctx.lineTo(canvas.width, canvas.height / 2);
+      ctx.stroke();
+
+      console.log("Fake audio waveform drawn");
+    }
+
+    // Random snack drop function
+    function dropRandomSnack() {
+      const snacks = [{
+        emoji: "🍗",
+        message: "Your dog earned this for doing absolutely nothing."
+      }, {
+        emoji: "🦴",
+        message: "Bone for being a good listener!"
+      }, {
+        emoji: "🥓",
+        message: "Bacon treat for existing!"
+      }, {
+        emoji: "🍖",
+        message: "Meat treat for breathing!"
+      }, {
+        emoji: "🧀",
+        message: "Cheese for being adorable!"
+      }, {
+        emoji: "🥩",
+        message: "Steak for being a dog!"
+      }, {
+        emoji: "🍪",
+        message: "Cookie for being cute!"
+      }, {
+        emoji: "🥨",
+        message: "Pretzel for being fluffy!"
+      }];
+
+      const randomSnack = snacks[Math.floor(Math.random() * snacks.length)];
+      const randomX = Math.random() * (window.innerWidth - 100);
+
+      // Create snack element
+      const snack = document.createElement("div");
+      snack.innerHTML = `
+        <div style="
+          position: fixed;
+          left: ${randomX}px;
+          top: -50px;
+          font-size: 3rem;
+          z-index: 99999;
+          animation: dropSnack 3s ease-in forwards;
+          pointer-events: none;
+        ">${randomSnack.emoji}</div>
+        <div style="
+          position: fixed;
+          left: ${randomX}px;
+          top: 50px;
+          font-size: 0.9rem;
+          color: #8b4513;
+          background: rgba(245, 240, 232, 0.9);
+          padding: 0.5rem;
+          border-radius: 10px;
+          border: 2px solid #8b4513;
+          z-index: 99999;
+          animation: fadeInSnack 3s ease-in forwards;
+          pointer-events: none;
+          max-width: 200px;
+          text-align: center;
+        ">${randomSnack.message}</div>
+      `;
+
+      document.body.appendChild(snack);
+
+      // Remove snack after animation
+      setTimeout(() => {
+        document.body.removeChild(snack);
+      }, 3000);
+    }
+
+    // Start random snack drops only when app section is visible
+    let snackInterval;
+
+    function startSnackDrops() {
+      snackInterval = setInterval(dropRandomSnack, 8000); // Drop a snack every 8 seconds
+
+      // Drop initial snack after 3 seconds
+      setTimeout(() => {
+        dropRandomSnack();
+      }, 3000);
+    }
+
+    function stopSnackDrops() {
+      if (snackInterval) {
+        clearInterval(snackInterval);
+        snackInterval = null;
+      }
+    }
+
+    // Dog Meme Generator
+    function generateDogMeme() {
+      const memes = [{
+        text: "When you bark at the mailman for the 100th time",
+        emoji: "🐕‍🦺",
+        caption: "Still convinced he's a threat"
+      }, {
+        text: "That moment when you realize you're a good boy",
+        emoji: "🐕",
+        caption: "Always have been"
+      }, {
+        text: "When someone says 'walk' but doesn't mean now",
+        emoji: "😤",
+        caption: "False advertising"
+      }, {
+        text: "When you finally catch your own tail",
+        emoji: "🎯",
+        caption: "Mission accomplished"
+      }, {
+        text: "That awkward moment when you bark at your own reflection",
+        emoji: "🤦‍♂️",
+        caption: "Who was that handsome stranger?"
+      }, {
+        text: "When you're supposed to be sleeping but hear a bag crinkle",
+        emoji: "👀",
+        caption: "Snack radar activated"
+      }, {
+        text: "When you realize you've been chasing your tail for 10 minutes",
+        emoji: "🤪",
+        caption: "Worth it"
+      }, {
+        text: "That feeling when you're the goodest boy",
+        emoji: "😎",
+        caption: "No contest"
+      }, {
+        text: "When someone says 'no' to treats",
+        emoji: "😱",
+        caption: "Inconceivable!"
+      }, {
+        text: "When you finally understand what 'sit' means",
+        emoji: "🧠",
+        caption: "Big brain moment"
+      }];
+
+      const randomMeme = memes[Math.floor(Math.random() * memes.length)];
+
+      document.getElementById("memeText").textContent = randomMeme.text;
+      document.getElementById("memeEmoji").textContent = randomMeme.emoji;
+      document.getElementById("memeCaption").textContent = randomMeme.caption;
+      document.getElementById("memeResult").style.display = "block";
+
+      // Add some animation
+      document.getElementById("memeResult").style.animation = "fadeInMeme 0.5s ease-in";
+    }
+
+    function translateBark(volume) {
+      const phrases = [
+        "The mailman is clearly a threat to national security!",
+        "I'm barking because... why not?",
+        "This carpet smells like betrayal.",
+        "Did you just eat cheese without me?",
+        "That leaf moved. I'm furious.",
+        "I am a potato. Woof.",
+        "I licked the couch and now I regret nothing.",
+        "Give. Me. The. Sock.",
+        "Was that a ghost or just a sneeze?",
+        "Alert! Air molecule passed by!"
+      ];
+
+      const types = [
+        "Conspiracy Bark",
+        "Existential Bark",
+        "Soap Opera Bark",
+        "Jealousy Bark",
+        "Leaf Rage Bark",
+        "Identity Crisis Bark",
+        "Rebellious Lick Bark",
+        "Sock Warfare Bark",
+        "Paranormal Bark",
+        "Microscopic Defender Bark"
+      ];
+
+      const index = Math.floor(Math.random() * phrases.length);
+
+      document.getElementById("translation").textContent = phrases[index];
+      document.getElementById("barkType").textContent = types[index];
+      document.getElementById("result").classList.remove("hidden");
+
+      const li = document.createElement("li");
+      li.textContent = `${new Date().toLocaleTimeString()} - ${phrases[index]} (${types[index]})`;
+      document.getElementById("barkDiary").prepend(li);
+    }
+  </script>
+</body>
+</html>
