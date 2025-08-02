@@ -1,26 +1,25 @@
 <img width="3188" height="1202" alt="frame (3)" src="https://github.com/user-attachments/assets/517ad8e9-ad22-457d-9538-a9e62d137cd7" />
 
 
-# [Project Name] 🎯
+# Doglingo 🎯
 
 
 ## Basic Details
-### Team Name: [Name]
+###  Name: Anagha Murali
 
 
-### Team Members
-- Team Lead: [Name] - [College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
 
 ### Project Description
-[2-3 lines about what your project does]
+Doglingo is a fun web app that “translates” dog barks into humorous messages. 🐶✨
+
+It listens to a dog's bark through the mic, analyzes the sound, and then shows a playful translation — like "Feed me now!" or "That squirrel was personal." It also has animated waveforms and cute UI features to make it feel like you're actually chatting with your dog.
+
 
 ### The Problem (that doesn't exist)
-[What ridiculous problem are you solving?]
+"What is my dog really trying to say when it barks?"
 
 ### The Solution (that nobody asked for)
-[How are you solving it? Keep it fun!]
+helps understand our dogs deep problems
 
 ## Technical Details
 ### Technologies/Components Used
@@ -47,14 +46,20 @@ For Software:
 For Software:
 
 # Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
+<img width="1440" height="900" alt="Screenshot 2025-08-02 at 7 19 22 AM" src="https://github.com/user-attachments/assets/cf3b3d73-0f7d-4516-ab39-095b378c6b38" />
+the intro page to doglingo 
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+
+<img width="1440" height="900" alt="Screenshot 2025-08-02 at 7 19 42 AM" src="https://github.com/user-attachments/assets/0b871061-a751-4328-ba41-907bb970ad1f" />
+
+profile for our dogs for their name,age and breed
+
+
+
+<img width="1440" height="900" alt="Screenshot 2025-08-02 at 7 20 05 AM" src="https://github.com/user-attachments/assets/f6670b0a-c932-42f8-be1a-b3fbe9919c7b" />
+
+the dog translator where it "translates" our dogs barks
 
 # Diagrams
 ![Workflow](Add your workflow/architecture diagram here)
@@ -81,8 +86,13 @@ For Hardware:
 
 ### Project Demo
 # Video
-[Add your demo video link here]
-*Explain what the video demonstrates*
+
+
+https://github.com/user-attachments/assets/86a4b88e-9165-4254-8c2b-6b29c8a26b00
+
+
+
+the video shows how we can translate the barks into silly texts
 
 # Additional Demos
 [Add any extra demo materials/links]
